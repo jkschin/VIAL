@@ -2,3 +2,13 @@ p {
 	margin-top: 0px;
 	text-align: center;
 }
+
+#image_caption_div {
+	display:inline-block;
+	max-width: 22%;
+}
+
+img {
+	max-width:100%;
+	max-height:100%;
+}

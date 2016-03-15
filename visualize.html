@@ -4,19 +4,31 @@
     <title>Bootstrap 101 Template</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" type="text/css" href="styles.css">
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
   </head>
   <body>
-    <div>Input Log File: <input type="file" id="file-input" /></div>
-    <div>Directory: <input type="text" name="textbox1" id="file-directory"/></div>
-    <div><input type="submit" name="button" id="button1" onclick="removeAll(); readSingleFile();" value="Display!" /></div>
-    <div>Reading files from: <input type="text" name="textbox3" id="textbox3" style="width: 250px" readonly="true"/></div>
-  <h3>Contents of the file:</h3>
-  <pre id="file-content"></pre>
-  <table table-layout:'fixed'>
-  <tbody id="images">
-  </tbody>
-  </table>
+  	<div class="col-md-2"></div>
+  	<div class="col-md-8">
+  		<div>Input Log File: <input type="file" id="file-input" /></div>
+    	<div>Directory: <input type="text" name="textbox1" id="file-directory"/></div>
+    	<div><input type="submit" name="button" id="button1" onclick="removeAll(); readSingleFile();" value="Display!" /></div>
+    	<div>Reading files from: <input type="text" name="textbox3" id="textbox3" style="width: 250px" readonly="true"/></div>
+  		<h3>Contents of the file:</h3>
+  		<div id='image_container'>
+  			
+  		</div>
+  		<pre id="file-content"></pre>
+  		<table table-layout:'fixed'>
+  			<tbody id="images">
+  		</tbody>
+  		</table>
+  	</div>
+  	<div class="col-md-2"></div>
   <script>
+    var i = 0;
     function removeAll() {
       var element = document.getElementById('images')
       while (element.firstChild) {
@@ -39,19 +51,20 @@
     }
 
     function displayContents(contents) {
-      var element = document.getElementById('images');
+      var element = document.getElementById('image_container');
       var dir = document.getElementById('file-directory').value;
       displayDirectory(dir);
-      for (var i=0;i<contents.length;i++) {
-        var tr = document.createElement('TR');
+      for (i;i<contents.length;i++) {
+      	var div = document.createElement('DIV');
+      	div.setAttribute("id","image_caption_div")
         var p = document.createElement('P');
         var image = document.createElement('IMG');
-        tr.appendChild(image);
-        tr.appendChild(p);
+        div.appendChild(image);
+        div.appendChild(p);
         var str = contents[i].split(" ");
         image.src = dir.concat(str[0]);
         p.innerHTML = str[1];
-        element.appendChild(tr);
+        element.appendChild(div);
       }
     }
 
@@ -59,7 +72,31 @@
       var textbox3 = document.getElementById('textbox3');
       textbox3.value=dir.concat("sample.jpg");
     }
-    // document.getElementById('file-input').addEventListener('change', readSingleFile, false);
+    function loadMore(){
+    	console.log("More loaded")
+    	var element = document.getElementById('images');
+    	var dir = document.getElementById('file-directory').value;
+   		var div = document.createElement('DIV');
+      	div.setAttribute("id","image_caption_div")
+        var tr = document.createElement('TR');
+        var p = document.createElement('P');
+        var image = document.createElement('IMG');
+        tr.appendChild(div);
+        div.appendChild(image);
+        div.appendChild(p);
+        image.src = dir.concat("1.jpg");
+        p.innerHTML = 2;
+        element.appendChild(tr);
+        $(window).bind('scroll', bindScroll);
+ 	}
+
+ 	function bindScroll(){
+	   	if($(window).scrollTop() + $(window).height() > $(document).height() - 100) {
+	   		$(window).unbind('scroll');
+	       	loadMore();
+	    }
+	}
+	$(window).scroll(bindScroll);
   </script>
   </body>
 </html>
