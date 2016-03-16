@@ -6,7 +6,10 @@
     <link rel="stylesheet" type="text/css" href="styles.css">
   </head>
   <body>
-  <input type="file" id="file-input" />
+    <div>Input Log File: <input type="file" id="file-input" /></div>
+    <div>Directory: <input type="text" name="textbox1" id="file-directory"/></div>
+    <div><input type="submit" name="button" id="button1" onclick="removeAll(); readSingleFile();" value="Display!" /></div>
+    <div>Reading files from: <input type="text" name="textbox3" id="textbox3" style="width: 250px" readonly="true"/></div>
   <h3>Contents of the file:</h3>
   <pre id="file-content"></pre>
   <table table-layout:'fixed'>
@@ -14,8 +17,15 @@
   </tbody>
   </table>
   <script>
-    function readSingleFile(e) {
-      var file = e.target.files[0];
+    function removeAll() {
+      var element = document.getElementById('images')
+      while (element.firstChild) {
+        element.removeChild(element.firstChild);
+      }
+    }
+    function readSingleFile() {
+      var file = document.getElementById('file-input').files[0]
+      // var file = e.target.files[0];
       if (!file) {
         return;
       }
@@ -30,6 +40,8 @@
 
     function displayContents(contents) {
       var element = document.getElementById('images');
+      var dir = document.getElementById('file-directory').value;
+      displayDirectory(dir);
       for (var i=0;i<contents.length;i++) {
         var tr = document.createElement('TR');
         var p = document.createElement('P');
@@ -37,12 +49,17 @@
         tr.appendChild(image);
         tr.appendChild(p);
         var str = contents[i].split(" ");
-        image.src = "images/".concat(str[0]);
+        image.src = dir.concat(str[0]);
         p.innerHTML = str[1];
         element.appendChild(tr);
       }
     }
-    document.getElementById('file-input').addEventListener('change', readSingleFile, false);
+
+    function displayDirectory(dir){
+      var textbox3 = document.getElementById('textbox3');
+      textbox3.value=dir.concat("sample.jpg");
+    }
+    // document.getElementById('file-input').addEventListener('change', readSingleFile, false);
   </script>
   </body>
 </html>
