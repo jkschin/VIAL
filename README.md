@@ -6,3 +6,5 @@ A small HTML package to visualize images and the corresponding labels for neural
 Done in collaboration with https://github.com/javiersuweijie. Well actually, he helped me a lot in the initial commit.
 
 # Usage
+
+![alt tag](https://github.com/jkschin/VIAL/blob/master/vial_sample.png)
