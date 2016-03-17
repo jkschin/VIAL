@@ -18,6 +18,7 @@ function readSingleFile() {
   reader.onload = function(e) {
     var contents = e.target.result;
     var content_array = contents.split('\n');
+    i = 0;
     global_content_array = content_array;
     global_content_length = content_array.length;
     displayContents();
